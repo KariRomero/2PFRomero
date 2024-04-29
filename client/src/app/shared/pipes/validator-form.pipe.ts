@@ -7,14 +7,14 @@ import { ValidationErrors } from '@angular/forms';
 export class ValidatorFormPipe implements PipeTransform {
 
   transform(value: ValidationErrors | undefined | null, ...args: unknown[]): unknown {
-    console.log(value);
+    //console.log(value);
     if(value){
       let message : string [] = [];
 
       for (const key in value) {
         if (Object.prototype.hasOwnProperty.call(value, key)) {
           const error = value[key];
-          console.log(key);
+          //console.log(key);
 
           if(key==='required') message.push('Este campo es requerido');
           if(key === 'maxlength') message.push(`No puede tener mas de ${error.requiredLength} caracteres`);

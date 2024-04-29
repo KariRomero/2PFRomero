@@ -5,18 +5,20 @@ import { DashboardRoutingModule } from './dashboard-routing.module';
 import { DashboardComponent } from './dashboard.component';
 import { SharedModule } from '../../shared/shared.module';
 import { StudentsModule } from './pages/students/students.module';
+import { MatListModule } from '@angular/material/list';
 
 
 
 @NgModule({
   declarations: [
-    DashboardComponent
+    DashboardComponent,
   ],
   imports: [
     CommonModule,
     DashboardRoutingModule,
     SharedModule,
-    StudentsModule    
+    StudentsModule,
+    MatListModule
   ],
   exports:[
     DashboardComponent

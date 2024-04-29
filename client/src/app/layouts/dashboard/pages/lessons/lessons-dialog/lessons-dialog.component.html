@@ -1,0 +1,35 @@
+<h2 mat-dialog-title>Agregar clase</h2>
+<div mat-dialog-content>
+    <form [formGroup]="lessonsForm">
+        <div class="row py-4">
+            
+            <div class="col-6">
+                <mat-form-field class="w-100">
+                    <mat-label>Clase</mat-label>
+                    <input formControlName="clase" matInput/>
+                    <mat-hint>Puede contener mayúsculas, minúsculas y caracteres en blanco.</mat-hint>
+                    <mat-error>{{ claseControl?.errors | validatorForm }}</mat-error>
+                </mat-form-field>                
+            </div>
+
+            <div class="col-4">
+                <mat-form-field class="w-100">
+                    <mat-label>Horario</mat-label>
+                    <mat-select formControlName="horario">
+                        <mat-option value="8Am-12Pm">8Am-12Pm</mat-option>
+                        <mat-option value="12Pm-16Pm">12Pm-16Pm</mat-option>
+                        <mat-option value="18Pm-22pm">18Pm-22pm</mat-option>
+                    </mat-select>
+                    <mat-error>{{ horarioControl?.errors | validatorForm}}</mat-error>
+                </mat-form-field>            
+            </div>
+        </div>    
+    </form>
+
+</div>
+<pre>{{lessonsForm.value | json}} </pre>
+
+<div class="d-flex justify-content-end" mat-dialog-actions>
+    <button mat-dialog-close mat-button>Cancelar</button>
+    <button (click)="onSave()" mat-button>Guardar</button>
+</div>

@@ -2,20 +2,24 @@
 
     <!-- SIDEBAR -->
     <mat-drawer #drawer class="example-sidenav" mode="side">
-        <mat-list role="list">
-            <mat-list-item role="listitem">
+        <mat-nav-list>
+            <a routerLink="home" mat-list-item>
                 <mat-icon>home</mat-icon>
                 Inicio
-            </mat-list-item>
-            <mat-list-item role="listitem">
+            </a>
+            <a routerLink="students" mat-list-item>
                 <mat-icon>person</mat-icon>
                 Alumnos
-            </mat-list-item>
-            <mat-list-item role="listitem">
+            </a>
+            <a routerLink="courses" mat-list-item>
                 <mat-icon>menu_book</mat-icon>
                 Cursos
-            </mat-list-item>
-          </mat-list>                
+            </a>
+            <a routerLink="lessons" mat-list-item>
+                <mat-icon>book_5</mat-icon>
+                Clases
+            </a>
+        </mat-nav-list> 
     </mat-drawer>
   
     <div class="example-sidenav-content">
@@ -32,8 +36,9 @@
             <span>Universidad Angular</span>
         </mat-toolbar>
 
-        <app-students/>
-      
+        <!-- <app-students/> -->
+        <router-outlet/>
+        
     </div>  
   </mat-drawer-container>
   

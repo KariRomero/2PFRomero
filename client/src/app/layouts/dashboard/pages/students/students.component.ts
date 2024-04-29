@@ -1,14 +1,15 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { IStudent } from './models';
 import { MatDialog } from '@angular/material/dialog';
 import { StudentsDialogComponent } from './students-dialog/students-dialog.component';
+import { StudentsService } from './students.service';
 
 @Component({
   selector: 'app-students',
   templateUrl: './students.component.html',
   styleUrl: './students.component.scss'
 })
-export class StudentsComponent {
+export class StudentsComponent implements OnInit {
   displayedColumns : string[] = [
     'id',
     'nombre',
@@ -18,36 +19,19 @@ export class StudentsComponent {
     'acciones'
   ]
 
-  students : IStudent[] = [
-    {
-      id:1,
-      nombre:'Karina',
-      apellido:'Romero',
-      email:'karina@test.com',
-      curso: 'Angular',
-      createdAt: new Date()
-    },
-    {
-      id:2,
-      nombre:'Nicolas',
-      apellido:'Sanchez',
-      email:'neke@test.com',
-      curso: 'React',
-      createdAt: new Date()
-    },
-    {
-      id:3,
-      nombre:'Franco Matias',
-      apellido:'Ravera',
-      email:'fran@test.com',
-      curso: 'React',
-      createdAt: new Date()
-    }
-  ]
+  students : IStudent[] = [];
 
-  constructor(private matDialog: MatDialog){};
+  constructor(private matDialog: MatDialog, private studentsService:StudentsService){};
 
-  openDialog(editingStudent?:IStudent):void{
+  ngOnInit(): void {
+    this.studentsService.getStudents().subscribe({
+      next:(students)=>{
+        this.students = students
+      }
+    })
+  }
+  
+  openDialog(editingStudent?: IStudent): void {
     this.matDialog
     .open(StudentsDialogComponent,{
       data: editingStudent
@@ -56,22 +40,27 @@ export class StudentsComponent {
     .subscribe({
       next:(result)=>{
         if(result){
-          if(editingStudent){
-            this.students = this.students.map((s)=>s.id === editingStudent.id ?
-            {...s,...result} : s)
-          } else{
-            result.id = new Date().getTime();
-            result.createdAt = new Date();
-            this.students=[...this.students,result]
+          if (editingStudent) {
+            this.studentsService.updateStudent(editingStudent.id, result).subscribe(updatedStudents => {
+            this.students = updatedStudents;
+            });
+          } else{            
+            this.studentsService.addStudents(result).subscribe(updatedStudents => {
+            this.students = updatedStudents;
+            });
           }
         }
       }
     })
-  }
+}
+  
 
-  onDelete(id:number) : void{
-    if(confirm('¿Está seguro de eliminar usuario?'))
-      this.students = this.students.filter((s)=>s.id != id)
+onDelete(id:number): void {
+  if(confirm('¿Está seguro de eliminar usuario?')) {
+    this.studentsService.deleteStudent(id).subscribe(updatedStudents => {
+    this.students = updatedStudents;
+    });
   }
+}
 
 }
