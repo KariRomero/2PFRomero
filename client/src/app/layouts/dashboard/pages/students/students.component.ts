@@ -11,10 +11,10 @@ import { StudentsService } from './students.service';
 })
 export class StudentsComponent implements OnInit {
   displayedColumns : string[] = [
-    'id',
     'nombre',
     'email',
     'curso',
+    'turno',
     'createdAt',
     'acciones'
   ]
@@ -33,33 +33,25 @@ export class StudentsComponent implements OnInit {
   
   openDialog(editingStudent?: IStudent): void {
     this.matDialog
-    .open(StudentsDialogComponent,{
-      data: editingStudent
-    })
-    .afterClosed()
-    .subscribe({
-      next:(result)=>{
-        if(result){
-          if (editingStudent) {
-            this.studentsService.updateStudent(editingStudent.id, result).subscribe(updatedStudents => {
-            this.students = updatedStudents;
-            });
-          } else{            
-            this.studentsService.addStudents(result).subscribe(updatedStudents => {
-            this.students = updatedStudents;
-            });
+      .open(StudentsDialogComponent, { data: editingStudent })
+      .afterClosed()
+      .subscribe({
+        next: (result) => {
+          if (result) {
+            if (editingStudent) {
+              this.studentsService.updateStudent(editingStudent.id, result);
+            } else {
+              this.studentsService.addStudents(result);
+            }
           }
         }
-      }
-    })
-}
+      });
+  }
   
 
-onDelete(id:number): void {
-  if(confirm('¿Está seguro de eliminar usuario?')) {
-    this.studentsService.deleteStudent(id).subscribe(updatedStudents => {
-    this.students = updatedStudents;
-    });
+onDelete(id: number): void {
+  if (confirm('¿Está seguro de eliminar usuario?')) {
+    this.studentsService.deleteStudent(id);
   }
 }
 

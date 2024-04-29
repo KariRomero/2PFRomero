@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { BehaviorSubject, Observable, of } from "rxjs";
 import { ILesson } from "./models";
 
-const LESSONS_DB : ILesson[] = [
+let LESSONS_DB : ILesson[] = [
     {
         id:1,
         clase:'Angular Material',
@@ -34,24 +34,21 @@ export class LessonsService{
         return this.lessonsSubject.asObservable();
     }
 
-    addLessons(lesson:ILesson):Observable<ILesson[]>{
-        if (lesson) {
-            lesson.id = new Date().getTime();
-            const updatedLessons = [...this.lessonsSubject.value, lesson];
-            this.lessonsSubject.next(updatedLessons);
+    addLessons(data:ILesson){
+        if (data) {
+            const newLesson : ILesson ={...data,id: new Date().getTime()}
+            LESSONS_DB.push(newLesson);
+            this.lessonsSubject.next([...LESSONS_DB])
           }
-          return this.getLessons();        
     }
 
-    deleteLesson(id:number):Observable<ILesson[]>{
-        const updatedLessons = LESSONS_DB.filter((l)=>l.id != id);
-        this.lessonsSubject.next(updatedLessons);
-        return of(updatedLessons);
+    deleteLesson(id:number){
+        LESSONS_DB = LESSONS_DB.filter((l)=>l.id!=id);
+        this.lessonsSubject.next([...LESSONS_DB]);
     }
 
-    updateLesson(id:number,data:ILesson):Observable<ILesson[]>{
-        const updatedLessons = LESSONS_DB.map((l)=>l.id===id ? {...l,...data} : l);
-        this.lessonsSubject.next(updatedLessons);
-        return of(updatedLessons);
+    updateLesson(id:number,data:ILesson){
+        LESSONS_DB = LESSONS_DB.map((l)=>l.id===id ? {...l,...data} : l);
+        this.lessonsSubject.next([...LESSONS_DB]);
     }
 }

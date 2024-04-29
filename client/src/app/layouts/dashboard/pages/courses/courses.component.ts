@@ -41,13 +41,9 @@ export class CoursesComponent implements OnInit {
       next:(result)=>{
         if(result){
           if(editingCourse){
-            this.coursesService.updateCourse(editingCourse.id, result).subscribe(updateCourse=>{
-              this.courses = updateCourse;
-            });
+            this.coursesService.updateCourse(editingCourse.id,result);
           } else{
-            this.coursesService.addCourses(result).subscribe(updateCourse=>{
-              this.courses = updateCourse;
-            });
+            this.coursesService.addCourses(result);
           }
         }
       }
@@ -56,9 +52,7 @@ export class CoursesComponent implements OnInit {
 
   onDelete(id:number): void {
     if(confirm('¿Está seguro de eliminar usuario?')) {
-      this.coursesService.deleteCourse(id).subscribe(updateCourse => {
-      this.courses = updateCourse;
-      });
+      this.coursesService.deleteCourse(id);
     }
   }
 

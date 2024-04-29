@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { ICourse } from "./models";
 import { BehaviorSubject, Observable, of } from "rxjs";
 
-const COURSES_DV : ICourse[] = [
+let COURSES_DV : ICourse[] = [
     {
         id:1,
         curso:'Angular',
@@ -29,24 +29,21 @@ export class CoursesService{
         return this.coursesSubject.asObservable();
     }
 
-    addCourses(course:ICourse):Observable<ICourse[]>{
-        if(course){
-            course.id = new Date().getTime();
-            const updatedCourses = [...this.coursesSubject.value, course];
-            this.coursesSubject.next(updatedCourses);
-        }
-        return this.getCourses();
+    addCourses(data:ICourse){
+        if(data){
+            const newCourse:ICourse={...data, id: new Date().getTime()}
+            COURSES_DV.push(newCourse);
+            this.coursesSubject.next([...COURSES_DV]);
+        }        
     }
 
-    deleteCourse(id:number):Observable<ICourse[]>{
-        const updatedCourses = COURSES_DV.filter((c)=>c.id!=id);
-        this.coursesSubject.next(updatedCourses);
-        return of(updatedCourses);
+    deleteCourse(id:number){
+        COURSES_DV = COURSES_DV.filter((c)=>c.id!=id);
+        this.coursesSubject.next([...COURSES_DV])
     }
 
-    updateCourse(id:number,data:ICourse):Observable<ICourse[]>{
-        const updatedCourses = COURSES_DV.map((c)=>c.id===id ? {...c,...data} : c);
-        this.coursesSubject.next(updatedCourses);
-        return of(updatedCourses);
+    updateCourse(id:number,data:ICourse){
+        COURSES_DV = COURSES_DV.map((c)=>c.id===id ? {...c,...data} : c);
+        this.coursesSubject.next([...COURSES_DV])        
     }
 }

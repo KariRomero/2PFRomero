@@ -3,6 +3,7 @@ export interface IStudent{
     nombre: string;
     apellido: string;
     email: string;
-    curso:'Angular' | 'React'
+    curso:'Angular' | 'React';
+    turno: 'Mañana' | 'Tarde' | 'Noche';
     createdAt: Date;
 }

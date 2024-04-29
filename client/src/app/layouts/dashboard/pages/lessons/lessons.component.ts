@@ -41,13 +41,9 @@ export class LessonsComponent implements OnInit {
       next:(result)=>{
         if(result){
           if(editingLesson){
-            this.lessonsService.updateLesson(editingLesson.id, result).subscribe(updateLesson=>{
-              this.lessons = updateLesson;
-            });
+            this.lessonsService.updateLesson(editingLesson.id,result);
           } else{
-            this.lessonsService.addLessons(result).subscribe(updatedLessons=>{
-              this.lessons = updatedLessons;
-            });
+            this.lessonsService.addLessons(result);
           }
         }
       }
@@ -56,9 +52,7 @@ export class LessonsComponent implements OnInit {
 
   onDelete(id:number): void {
     if(confirm('¿Está seguro de eliminar usuario?')) {
-      this.lessonsService.deleteLesson(id).subscribe(updatedLessons => {
-      this.lessons = updatedLessons;
-      });
+      this.lessonsService.deleteLesson(id);
     }
   }
 
