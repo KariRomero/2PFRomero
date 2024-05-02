@@ -2,23 +2,25 @@
 
     <!-- SIDEBAR -->
     <mat-drawer #drawer class="example-sidenav" mode="side">
-        <mat-nav-list>
-            <a routerLink="home" mat-list-item>
-                <mat-icon>home</mat-icon>
-                Inicio
-            </a>
-            <a routerLink="students" mat-list-item>
-                <mat-icon>person</mat-icon>
-                Alumnos
-            </a>
-            <a routerLink="courses" mat-list-item>
-                <mat-icon>menu_book</mat-icon>
-                Cursos
-            </a>
-            <a routerLink="lessons" mat-list-item>
-                <mat-icon>book_5</mat-icon>
-                Clases
-            </a>
+        <mat-nav-list>            
+            <div class="nav-list">
+                <a mat-list-item routerLink="home">
+                    <mat-icon>home</mat-icon>
+                    Inicio
+                </a>
+                <a mat-list-item routerLink="students">
+                    <mat-icon>person</mat-icon>
+                    Alumnos
+                </a>
+                <a mat-list-item routerLink="courses">
+                    <mat-icon>menu_book</mat-icon>
+                    Cursos
+                </a>
+                <a mat-list-item routerLink="lessons">
+                    <mat-icon>book_5</mat-icon>
+                    Clases
+                </a>
+            </div>
         </mat-nav-list> 
     </mat-drawer>
   
